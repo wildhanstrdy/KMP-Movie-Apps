@@ -8,6 +8,8 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.nativeCoroutine)
 }
 
 kotlin {
@@ -51,6 +53,10 @@ kotlin {
             implementation(compose.components.resources)
             implementation(libs.ktor.client.cio)
             implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.auth)
+            implementation(libs.ktor.client.logging)
+            implementation(libs.ktor.client.kotlinx.serialization)
+            implementation(libs.ktor.client.content.negotiation)
             implementation(libs.kodein.di)
             implementation(libs.kotlinx.serialization)
         }
