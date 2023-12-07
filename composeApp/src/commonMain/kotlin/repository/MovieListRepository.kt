@@ -1,5 +1,6 @@
-package api
+package repository
 
+import api.MovieService
 import io.ktor.client.HttpClient
 
 interface MovieListRepository {
@@ -7,7 +8,7 @@ interface MovieListRepository {
 }
 
 internal class MovieListRepositoryImpl constructor(
-    val httpClient: HttpClient
+    val movieService: MovieService
 ) : MovieListRepository {
 
 }
