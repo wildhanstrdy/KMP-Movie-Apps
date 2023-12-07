@@ -1,10 +1,13 @@
 import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.konan.properties.Properties
+import java.io.FileInputStream
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 kotlin {
@@ -36,7 +39,6 @@ kotlin {
             implementation(libs.compose.ui)
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
-            implementation(libs.koin.android)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
@@ -49,7 +51,8 @@ kotlin {
             implementation(compose.components.resources)
             implementation(libs.ktor.client.cio)
             implementation(libs.ktor.client.core)
-            implementation(libs.koin.core)
+            implementation(libs.kodein.di)
+            implementation(libs.kotlinx.serialization)
         }
     }
 }
@@ -103,5 +106,16 @@ compose.desktop {
             packageName = "com.learn4codes.myfavoritemovie"
             packageVersion = "1.0.0"
         }
+    }
+}
+
+fun getMovieDbApiKey(): String {
+    val file = rootProject.file("local.properties")
+    return if (file.exists()) {
+        val properties = Properties()
+        properties.load(FileInputStream(file))
+        properties.getProperty("apikey_moviedb")
+    } else {
+        ""
     }
 }
